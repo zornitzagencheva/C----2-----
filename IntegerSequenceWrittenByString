@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IntedetSequenceWrittenByString
+{
+    class Program
+    {
+        //static string ConvertCharArrayToString(List<char> oneNumber)
+        //{
+        //    StringBuilder builder = new StringBuilder();
+        //    foreach (char value in oneNumber)
+        //    {
+        //        builder.Append(value);
+        //    }
+        //    return builder.ToString();
+        //}
+
+        private static int ConvertToStringAndThanToInt(List<char> charsOfString, int sum)
+        {
+            string one = new string(charsOfString.ToArray());
+            int oneNum = int.Parse(one);
+            sum += oneNum;
+            charsOfString.Clear();
+            return sum;
+        }
+
+        static void Main(string[] args)
+        {
+            //Task 6: You are given a sequence of positive integer values written into a string, separated by spaces. 
+            //Write a function that reads these values from given string and calculates their sum. Example:
+		    //string = "43 68 9 23 318"  result = 461
+
+            Console.WriteLine("Please enter positive integer numbers separated by spaces: ");
+            string values = Console.ReadLine();          //First salution of task: convert List char array to string and than to int.
+
+            List<char> charsOfString = new List<char>(); //Second salution of task: (further down the page) use method with stringBuilder and 
+            int sum = 0;                                 //it's property - Append. Finaly the method returns stringBuilder converted to string.
+            
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] != (char)' ')
+                {
+                    charsOfString.Add(values[i]);
+                }
+                else
+                {
+                    sum = ConvertToStringAndThanToInt(charsOfString, sum);
+                }
+                if (i == values.Length - 1)
+                {
+                    sum = ConvertToStringAndThanToInt(charsOfString, sum);
+                }
+            }
+            Console.WriteLine(sum);
+
+            //string values = "43 68 9 23 318";              ---> //This is second salution!
+            //List<char> oneNumber = new List<char>();
+            //int sum = 0;
+
+            //for (int i = 0; i < values.Length; i++)
+            //{
+            //    if (values[i] != (char)' ')
+            //    {
+            //        oneNumber.Add(values[i]);
+            //    }
+            //    else
+            //    {
+            //        string one = ConvertCharArrayToString(oneNumber);
+            //        int oneNum = int.Parse(one);
+            //        sum += oneNum;
+            //        oneNumber.Clear();
+            //    }
+            //}
+
+            //Console.WriteLine("The sum is: {0}", sum);
+            
+        }
+
+    }
+}
