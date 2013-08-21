@@ -1,0 +1,112 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _01.d_FillsAndPrintsMatrix
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Task 1: Write a program that fills and prints a matrix of size (n, n) as shown below: (examples for n = 4)
+            //d)
+
+            int N = 0;
+            bool parseSuccess = false;
+
+            do
+            {
+                Console.Write("Please enter a positive integer N: ");
+                parseSuccess = int.TryParse(Console.ReadLine(), out N);
+            } while (!parseSuccess);
+
+            int[,] numbersTable = new int[N, N];
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    numbersTable[i, j] = 0;
+                }
+            }
+
+            // Some helper variables to determine which direction we are going drawing the spiral
+            int dirColumn = 1;
+            int dirRow = 0;
+            int currentColumn = 0;
+            int currentRow = 0;
+
+            // We have to put N*N number of integers (from 1 to N*N)
+            for (int i = 1; i <= N * N; i++)
+            {
+                // Put the i-th number
+                numbersTable[currentRow, currentColumn] = i;
+
+                // Go to the next cell in the Matrix
+                currentRow += dirRow;
+                currentColumn += dirColumn;
+
+                if (dirRow == 1)
+                {
+                    // Currently we are going down
+                    if (currentRow == N || numbersTable[currentRow, currentColumn] != 0)
+                    {
+                        // We hit the bottom or another number (my tail)
+                        currentRow--;
+                        currentColumn--;
+                        dirRow = 0;
+                        dirColumn = -1;
+                    }
+                }
+
+                if (dirRow == -1)
+                {
+                    if (currentRow == -1 || numbersTable[currentRow, currentColumn] != 0)
+                    {
+                        // We hit the roof or another number
+                        currentRow++;
+                        currentColumn++;
+                        dirRow = 0;
+                        dirColumn = 1;
+                    }
+                }
+
+                if (dirColumn == 1)
+                {
+                    if (currentColumn == N || numbersTable[currentRow, currentColumn] != 0)
+                    {
+                        // We hit the right wall or another number
+                        currentColumn--;
+                        currentRow++;
+                        dirRow = 1;
+                        dirColumn = 0;
+                    }
+                }
+
+                if (dirColumn == -1)
+                {
+                    if (currentColumn == -1 || numbersTable[currentRow, currentColumn] != 0)
+                    {
+                        // Guess what we hit here
+                        currentColumn++;
+                        currentRow--;
+                        dirRow = -1;
+                        dirColumn = 0;
+                    }
+                }
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    Console.Write(numbersTable[i, j] + "\t");
+                }
+                Console.WriteLine("");
+            }
+        }
+        
+    }
+}
